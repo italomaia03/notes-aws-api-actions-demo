@@ -52,6 +52,10 @@ functions:
             - http:
                   method: post
                   path: notes
+                  authorizer:
+                      name: userpool_authorizer
+                      type: COGNITO_USER_POOLS
+                      arn: !GetAtt cognitoUserPool.Arn
     updateNote:
         handler: handler.updateNote
         environment:
@@ -66,6 +70,10 @@ functions:
             - http:
                   method: put
                   path: notes/{id}
+                  authorizer:
+                      name: userpool_authorizer
+                      type: COGNITO_USER_POOLS
+                      arn: !GetAtt cognitoUserPool.Arn
     getNotes:
         handler: handler.getNotes
         environment:
@@ -104,6 +112,10 @@ functions:
             - http:
                   method: delete
                   path: notes/{id}
+                  authorizer:
+                      name: userpool_authorizer
+                      type: COGNITO_USER_POOLS
+                      arn: !GetAtt cognitoUserPool.Arn
 
 plugins:
     - serverless-iam-roles-per-function

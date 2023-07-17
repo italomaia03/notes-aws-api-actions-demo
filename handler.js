@@ -85,10 +85,6 @@ module.exports.deleteNote = async (event, context, cb) => {
     } catch (error) {
         cb(null, send(500, error.message));
     }
-    return {
-        statusCode: 204,
-        body: JSON.stringify("no content"),
-    };
 };
 
 module.exports.getNotes = async (_event, context, cb) => {
@@ -107,9 +103,21 @@ module.exports.getNotes = async (_event, context, cb) => {
     }
 };
 module.exports.getNote = async (event) => {
-    const noteId = event.pathParameters.id;
-    return {
-        statusCode: 200,
-        body: JSON.stringify("Note " + noteId),
-    };
+    context.callbackWaitForEmptyEventLoop = false;
+    const notesId = event.pathParameters.id;
+
+    try {
+        const params = {
+            TableName: NOTES_TABLE_NAME,
+            Key: {
+                notesId,
+            },
+        };
+
+        const note = await documentClient.scan(params).promise();
+
+        cb(null, send(200, note));
+    } catch (error) {
+        cb(null, send(500, error.message));
+    }
 };

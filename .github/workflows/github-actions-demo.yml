@@ -29,3 +29,7 @@ jobs:
               env:
                   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  USER: ${{ secrets.USER }}
+                  PASSWORD: ${{ secrets.PASSWORD }}
+                  TEST_ROOT: ${{vars.TEST_ROOT}}
+                  USER_POOL_ID: ${{vars.USER_POOL_ID}}
